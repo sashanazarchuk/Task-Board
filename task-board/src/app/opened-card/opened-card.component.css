@@ -1,0 +1,9 @@
+mat-dialog-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px !important;
+    overflow: hidden;
+    
+ }
+
+ 

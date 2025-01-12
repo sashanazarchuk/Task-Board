@@ -1,0 +1,68 @@
+<div mat-dialog-title align="end" class="bg-[#5e647f]">
+    <button mat-dialog-close>
+        <mat-icon class="text-white">close</mat-icon>
+    </button>
+</div>
+
+
+<mat-dialog-content>
+    <form (ngSubmit)="card.cardId ? editCard() : createCard()">
+        <div class="h-auto">
+            <div class="flex justify-start items-center m-5">
+                <h1 class="text-3xl font-semibold mr-2 ml-5">{{ card.cardId ? 'Edit card' : 'New card' }}</h1>
+                <input [(ngModel)]="inputNameCard" name="name"  class="flex h-10 text-2xl hidden-input"
+                    >
+            </div>
+
+            <div class="mt-5 ml-10 w-full">
+                <div class="grid grid-cols-3 justify-items-stretch">
+                    <p class="flex text-lg text-[#5d6482] "><img src="icons/list.svg" class="pr-3">List</p>
+                    <select [(ngModel)]="selectedCardListId" name="cardListId" required
+                        class="w-24 border rounded-md bg-[#e1e3e9] py-1">
+                        <option [ngValue]="null" selected disabled>Move to:</option>
+                        <option *ngFor="let cardList of cardLists" [ngValue]="cardList.cardListId">
+                            {{ cardList.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="pt-5 grid grid-cols-3 justify-items-stretch">
+                    <p class="flex text-lg text-[#5d6482]"><img src="icons/calendar.svg" class="pr-3">Due date</p>
+                    <select [(ngModel)]="selectedDate" class="border rounded-md bg-[#f3f4f6] py-1 col-span-2 w-28"
+                        name="date" id="date" (change)="onDateChange()">
+                        <option [ngValue]="null" selected disabled>Select dates:</option>
+                        <option *ngFor="let date of availableDates" [ngValue]="date">
+                            {{ date | date:'EEE, d MMM' }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="pt-5 grid grid-cols-3 justify-items-stretch">
+                    <p class="flex text-lg text-[#5d6482]"><img src="icons/badge.svg" class="pr-3">Priority</p>
+                    <select [(ngModel)]="selectedPriority" name="priority" required
+                        class="border rounded-md bg-[#f3f4f6] py-1 col-span-2 w-32">
+                        <option [ngValue]="null" selected disabled>Select priority</option>
+                        <option [ngValue]="CardPriority.Low">Low</option>
+                        <option [ngValue]="CardPriority.Medium">Medium</option>
+                        <option [ngValue]="CardPriority.High">High</option>
+                    </select>
+                </div>
+
+                <h1 class="flex text-2xl font-medium pt-10">Description</h1>
+
+                <textarea type="text" [(ngModel)]="inputDescCard" name="description" id="desc"  
+                    placeholder="Write some information..." class="custom-textarea border-2 mt-2 h-24"></textarea>
+
+                <div class="pt-2 flex justify-between">
+                    <button type="submit"
+                        [disabled]="!inputNameCard || !selectedDate || !selectedPriority || !selectedCardListId"
+                        class="rounded w-2/4 p-2 mr-2 bg-[#5e647f] text-white">{{ card.cardId ? 'Edit' : 'Create'
+                        }}</button>
+                    <button type="button" (click)="closeModal()"
+                        class="rounded border-2 w-2/4 p-2 ml-2 font-medium">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>

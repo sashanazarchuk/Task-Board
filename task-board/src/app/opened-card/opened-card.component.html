@@ -1,0 +1,62 @@
+<div mat-dialog-title align="end" class="bg-[#5e647f]">
+    <button mat-dialog-close>
+        <mat-icon class="text-white">close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+
+    <!-- Card description -->
+    <div class="pt-5 w-3/5 bg-white pl-10">
+        <div class="flex justify-between">
+            <h1 class="text-3xl font-semibold">{{card.name}}</h1>
+            <button (click)="openEditCardDialog(card)"
+                class="flex items-center border-2 px-5 mr-10 rounded-md font-medium">
+                <img src="icons/edit-button.svg" class="mr-2">Edit card
+            </button>
+        </div>
+
+        <div class="pt-5">
+            <div class="grid grid-cols-3 justify-items-stretch pt-5">
+                <p class="flex text-lg text-[#5d6482]"><img src="icons/list.svg" class="pr-3">List</p>
+                <select [(ngModel)]="card.cardListId" name="cardListId{{card.cardId}}"
+                    class="border rounded-md bg-[#f3f4f6] py-1 w-40 col-span-2" (ngModelChange)="moveCard(card)">
+                    <option [ngValue]="null" selected disabled>Move to:</option>
+                    <option *ngFor="let list of cardLists" [value]="list.cardListId">
+                        {{ list.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-3 justify-items-stretch pt-5">
+                <p class="flex text-lg text-[#5d6482]"><img src="icons/calendar.svg" class="pr-3">Due Date</p>
+                <p class="w-40 font-medium truncate">{{ card.date | date:'EEE, d MMM' }}</p>
+            </div>
+
+            <div class="grid grid-cols-3 justify-items-stretch pt-5">
+                <p class="flex text-lg text-[#5d6482]"><img src="icons/badge.svg" class="pr-3">Priority</p>
+                <p class="w-1/4 font-medium">{{ getPriorityName(card.priority) }}</p>
+            </div>
+
+            <h1 class="flex text-2xl font-medium pt-5">Description</h1>
+
+        </div>
+        <p class="w-3/4 text-[#5d6482]">{{card.description}}</p>
+    </div>
+
+
+    <!-- Card Activity -->
+    <div class="justify-start pt-5 w-2/5 pl-10 bg-[#f3f4f6]">
+        <h1 class="text-3xl font-medium">Activity</h1>
+        <div class="flex justify-between pr-2 items-start pt-5" *ngFor="let activity of activities">
+            <div class="flex">
+                <img src="icons/dot.svg" class="mr-2 mt-2 w-2 h-2">
+                <p class="text-base" [innerHTML]="activity.action">
+                    {{activity.action}}
+                </p>
+            </div>
+            <h1 class="text-sm italic mr-2 items-start">{{ activity.date | date:'MMM d, h:mm a' }}</h1>
+        </div>
+    </div>
+
+</mat-dialog-content>

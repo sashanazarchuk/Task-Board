@@ -1,0 +1,33 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" position="end">
+    <div class="sidenav-content">
+      <div class="bg-[#5e647f] p-4 flex justify-between items-center">
+        <h1 class="text-xl text-white font-semibold">History</h1>
+        <button (click)="closeSidenav()">
+          <mat-icon class="text-white">close</mat-icon>
+        </button>
+      </div>
+
+      <!-- Content for the history -->
+      <div class="p-4" *ngFor="let history of displayedHistories">
+        <div class="flex justify-between pr-2 items-center">
+          <div class="flex items-center">
+            <img src="icons/dot.svg" class="mr-2">
+            <p class="text-base flex">{{ history.action }}</p>
+          </div>
+        </div>
+        <h1 class="text-base italic mt-2 ml-5 font-normal">{{ history.date | date:'MMM d \'at\' h:mm a' }}</h1>
+      </div>
+
+      <div class="flex justify-center w-full p-4">
+        <button (click)="showMore()" class="flex justify-center items-center border-2 rounded-md border-slate-500 p-2 mb-2 w-9/12 ">
+          <img src="icons/refresh.svg" class="pr-2"> Show more
+        </button>
+      </div>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

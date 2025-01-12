@@ -1,0 +1,9 @@
+<button   class="order-last border ml-2 p-2 flex items-center rounded-md bg-white" [matMenuTriggerFor]="menu">Board settings</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onCreateClick()"><span class="flex"> <img src="icons/plus.svg" 
+                class="mr-1 items-center  w-3.5">Create</span></button>
+    <button mat-menu-item (click)="onEditClick()"><span class="flex"> <img src="icons/edit-button.svg"
+                class="mr-1 items-center">Edit</span></button>
+    <button mat-menu-item (click)="onDeleteClick()"> <span class="flex text-red-500"> <img src="icons/delete.svg"
+                class="mr-1 items-center">Delete</span></button>
+</mat-menu>

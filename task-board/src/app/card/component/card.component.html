@@ -1,0 +1,35 @@
+<div *ngIf="listDtos">
+    <div class="border-2 rounded-md w-full mb-3" *ngFor="let card of listDtos">
+        <!-- Card Name -->
+        <div class="flex justify-between p-2">
+            <button mat-button (click)="openCardDialog(card)">{{card.name}}</button>
+            <app-menu (editListName)="openEditCardDialog(card)" (deleteList)="onDeleteClick(card)" class="align-middle mt-2"></app-menu>
+        </div>
+
+        <!-- Description -->
+        <p class="w-4/5 text-sm px-2 text-slate-500">{{card.description}} </p>
+
+        <!-- Date -->
+        <div class="flex justify-start py-3 px-2">
+            <img src="icons/calendar.svg">
+            <span class="pl-3 text-slate-400">{{ card.date | date:'EEE,d MMM' }}</span>
+        </div>
+
+        <!-- Priority -->
+        <span class="ml-2 inline-flex items-center px-3 border rounded-full text-slate-500 bg-[#f3f4f6]">
+            <img src="icons/dot.svg">
+            <span class="ml-2 text-base">{{ getPriorityName(card.priority) }}</span>
+        </span>
+
+        <!-- Moving a card to another list -->
+        <div class="px-2 py-3 w-full">
+            <select [(ngModel)]="card.cardListId" name="cardListId{{card.cardId}}"
+                class="w-full border rounded-md bg-[#e1e3e9] py-1" (ngModelChange)="moveCard(card)">
+                <option [ngValue]="null" selected disabled>Move to:</option>
+                <option *ngFor="let list of cardLists" [value]="list.cardListId">
+                    {{ list.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>

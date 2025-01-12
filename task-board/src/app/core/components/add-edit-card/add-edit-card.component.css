@@ -1,0 +1,26 @@
+mat-dialog-content {
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 0px !important;
+    overflow: hidden;
+    background-color: white;
+}
+
+.hidden-input {
+    border: none;
+    outline: none;
+    background: transparent;
+  
+}
+
+
+.custom-textarea {
+    resize: none;
+    overflow: hidden;
+    width: 100%;
+    padding: 1.5%;
+    border: 2;
+    border-radius: 2%;
+}
+
+ 
