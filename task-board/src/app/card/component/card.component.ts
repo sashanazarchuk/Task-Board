@@ -1,4 +1,4 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { CardPriority, ICard } from '../models/card';
 import { ICardList } from '../../list/models/list';
@@ -48,7 +48,7 @@ export class CardComponent {
     if (card) {
       this.service.updateCard(card).subscribe(
         (response) => {
-          location.reload();
+          // location.reload();
           console.log('Card successfully moved', response);
         },
         (error) => {

@@ -5,7 +5,7 @@ import { BASE_URL } from "../../../config";
 import { IBoard } from "../models/board";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 
 export class BoardService {
@@ -27,8 +27,8 @@ export class BoardService {
         return this.http.get<IBoard[]>(`${this.base}Board/FetchAllBoards`).pipe(
             catchError(error => {
                 console.error('Error fetching boards:', error);
-                return throwError(() => new Error('Failed to fetch boards'));
-            })
+                return throwError(() => new Error('Failed to fetch boards'));  
+            })  
         );
     }
 

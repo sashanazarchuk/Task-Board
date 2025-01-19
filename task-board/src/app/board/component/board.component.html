@@ -1,12 +1,14 @@
-<app-history #history [board]="board">
+<app-history #history [board]="(currentBoard$ | async) || null">
     <div class="container w-full p-11 grid">
-        <div class="flex justify-between" *ngIf="board">
+        <div class="flex justify-between" *ngIf="currentBoard$ | async as board">
+
+            <div *ngIf="isLoading$|async">Loading...</div>
 
             <div class="flex w-full">
-                <select [(ngModel)]="currentBoardId" (ngModelChange)="onBoardChange($event)"
-                    name="boardId{{currentBoardId}}" class="border rounded-md bg-white  ">
-                    <option *ngFor="let b of boards" [value]="b.boardId">
-                        {{b.name}}
+                <select [(ngModel)]="currentBoardId" (ngModelChange)="onBoardChange($event)" id="boardId" name="boardId"
+                    class="border rounded-md bg-white">
+                    <option *ngFor="let b of boards$ | async" [value]="b.boardId">
+                        {{ b.name }}
                     </option>
                 </select>
 
@@ -19,7 +21,7 @@
                         class="rounded pl-2 bg-slate-200 placeholder:text-zinc-950 w-full"
                         [placeholder]="isEditMode ? 'Edit Board Name...' : 'Create Board...'" />
                     <div class="flex justify-between w-full">
-                        <button (click)="isEditMode ? onEditBoardClick() : onCreateBoardClick()"
+                        <button (click)="isEditMode ? onEditBoardClick(board) : onCreateBoardClick()"
                             class="border-2 rounded-md bg-blue-950 ml-3 text-white w-2/5">
                             {{ isEditMode ? 'Save' : 'Add' }}
                         </button>
@@ -35,6 +37,6 @@
             </button>
 
         </div>
-        <app-list [board]="board"></app-list>
+        <app-list [board]="(currentBoard$ | async) || null"></app-list>
     </div>
 </app-history>
