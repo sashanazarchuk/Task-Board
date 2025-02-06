@@ -40,4 +40,13 @@ export class ListService {
             })
         );
     }
+
+    fetchListByBoardId(boardId: number): Observable<ICardList[]> {
+        return this.http.get<ICardList[]>(`${this.base}CardList/FetchListsByBoardId/${boardId}`).pipe(
+            catchError(error => {
+                console.error('Error fetching lists:', error);
+                return throwError(error);
+            })
+        );
+    }
 }

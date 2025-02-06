@@ -1,54 +1,58 @@
-<div class="py-5 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-5" *ngIf="board">
-    <div *ngFor="let list of board.listDtos">
+<div *ngIf="board$ | async as board;">
 
-        <div class="flex justify-between items-center border-y-2 w-full">
-            <h1 class="w-4/5">{{ list.name }}</h1>
-            <span>{{ list.cardCount }}</span>
+    <div class="py-5 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-5" *ngIf="lists$ | async as lists">
+        <div *ngFor="let list of lists">
 
-            <div *ngIf="showMenuInput && selectedCardList === list" class="w-full p-1">
-                <input [(ngModel)]="inputMenuValue"
-                    class="rounded p-2 mb-2 bg-slate-200 placeholder:text-zinc-950 w-full"
-                    placeholder="Edit list name..." />
-                <div class="flex justify-between w-full">
-                    <button (click)="onAddMenuClick( )"
-                        class="border-2 rounded-md bg-blue-950 text-white p-2 w-2/5">Edit</button>
-                    <button (click)="onCancelMenuClick()" class="border-2 p-2 rounded-md w-2/5">Cancel</button>
+            <div class="flex justify-between items-center border-y-2 w-full">
+                <h1 class="w-4/5">{{ list.name }}</h1>
+                <span>{{ list.cardCount }}</span>
+
+                <div *ngIf="showMenuInput && (currentList$ | async) === list" class="w-full p-1">
+                    <input [(ngModel)]="inputMenuValue"
+                        class="rounded p-2 mb-2 bg-slate-200 placeholder:text-zinc-950 w-full"
+                        placeholder="Edit list name..." />
+                    <div class="flex justify-between w-full">
+                        <button (click)="onAddMenuClick(list)"
+                            class="border-2 rounded-md bg-blue-950 text-white p-2 w-2/5">Edit</button>
+                        <button (click)="onCancelMenuClick()" class="border-2 p-2 rounded-md w-2/5">Cancel</button>
+                    </div>
                 </div>
+
+                <app-menu class="align-middle mt-2" [cardListName]="list.name" (editListName)="onEditListClick(list)"
+                    (deleteList)="onDeleteListClick(list)"></app-menu>
+
             </div>
 
-            <app-menu class="align-middle mt-2" [cardListName]="list.name" (editListName)="onEditListClick(list)" 
-                (deleteList)="onDeleteListClick(list)" ></app-menu>
+
+            <!-- Add new card button -->
+            <button (click)="openAddCardDialog(board)"
+                class="w-full border-2 border-dashed my-3 p-2 rounded-md flex items-center justify-center">
+                <img class="align-middle mr-2" src="icons/plus.svg" /> Add new card
+            </button>
+
+
+            <!-- Displaying cards for a specific list -->
+            <app-card [listDtos]="getCardsFromList(list.cardListId, board)" [cardLists]="board.listDtos"></app-card>
 
         </div>
 
-
-        <!-- Add new card button -->
-        <button (click)="openAddCardDialog()" class="w-full border-2 border-dashed my-3 p-2 rounded-md flex items-center justify-center">
-            <img class="align-middle mr-2" src="icons/plus.svg" /> Add new card
-        </button>
-
-
-        <!-- Displaying cards for a specific list -->
-        <app-card [listDtos]="getCardsFromList(list.cardListId)" [cardLists]="board.listDtos"></app-card>
-
-    </div>
-
-    <div class="flex justify-between items-center border-y-2 w-full h-10">
-        <button class="flex justify-between w-full" (click)="toggleInputBlock()">
-            <h1>Add another list</h1>
-            <img class="align-middle mr-2" src="icons/plus.svg" />
-        </button>
-    </div>
-
-    <!-- The block that will be hidden/displayed -->
-    <div *ngIf="isInputBlockVisible" class="w-full p-1">
-        <input [(ngModel)]="inputListValue" class="rounded p-2 mb-2 bg-slate-200 placeholder:text-zinc-950 w-full"
-            placeholder="Enter list title..." />
-        <div class="flex justify-between w-full">
-            <button (click)="onCreateListClick()"
-                class="border-2 rounded-md bg-blue-950 text-white p-2 w-2/5">Add</button>
-            <button (click)="onCancelListClick()" class="border-2 p-2 rounded-md w-2/5">Cancel</button>
+        <div class="flex justify-between items-center border-y-2 w-full h-10">
+            <button class="flex justify-between w-full" (click)="toggleInputBlock()">
+                <h1>Add another list</h1>
+                <img class="align-middle mr-2" src="icons/plus.svg" />
+            </button>
         </div>
-    </div>
 
+        <!-- The block that will be hidden/displayed -->
+        <div *ngIf="isInputBlockVisible" class="w-full p-1">
+            <input [(ngModel)]="inputListValue" class="rounded p-2 mb-2 bg-slate-200 placeholder:text-zinc-950 w-full"
+                placeholder="Enter list title..." />
+            <div class="flex justify-between w-full">
+                <button (click)="onCreateListClick(board)"
+                    class="border-2 rounded-md bg-blue-950 text-white p-2 w-2/5">Add</button>
+                <button (click)="onCancelListClick()" class="border-2 p-2 rounded-md w-2/5">Cancel</button>
+            </div>
+        </div>
+
+    </div>
 </div>

@@ -2,13 +2,12 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListComponent } from '../../list/component/list.component';
 import { IBoard } from '../models/board';
-import { BoardService } from '../services/board.service';
 import { HistoryComponent } from '../../history/components/history.component';
 import { FormsModule } from '@angular/forms';
 import { BoardMenuComponent } from "../board-menu/board-menu.component";
 import { select, Store } from '@ngrx/store';
-import * as BoardActions from '../store/actions'
-import { boardSelector, getBoardByIdSelector, isLoadingSelector } from '../store/selectors';
+import * as BoardActions from '../store/board-actions'
+import { boardSelector, getBoardByIdSelector, isLoadingSelector } from '../store/board-selectors';
 import { Observable, of } from 'rxjs';
 import { AppState } from '../../types/appState';
 

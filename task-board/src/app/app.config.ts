@@ -7,9 +7,20 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { BoardEffects } from './board/store/effects';
-import { boardReducer } from './board/store/reducer';
+import { BoardEffects } from './board/store/board-effects';
+import { boardReducer } from './board/store/board-reducer';
+import { CardListEffect } from './list/store/list-effects';
+import { listReducer } from './list/store/list-reducer';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch()), provideAnimationsAsync(), provideStore({ boards: boardReducer }), provideEffects([BoardEffects]), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  provideRouter(routes),
+  provideHttpClient(withFetch()),
+  provideAnimationsAsync(),
+  provideStore({
+    boards: boardReducer,
+    lists: listReducer
+  }),
+  provideEffects([BoardEffects, CardListEffect]),
+  provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })]
 };

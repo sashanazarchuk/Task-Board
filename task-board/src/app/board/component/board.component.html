@@ -37,6 +37,6 @@
             </button>
 
         </div>
-        <app-list [board]="(currentBoard$ | async) || null"></app-list>
+        <app-list [board$]="currentBoard$"></app-list>
     </div>
 </app-history>

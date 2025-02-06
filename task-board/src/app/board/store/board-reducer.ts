@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { boardState } from "../models/boardState";
-import * as BoardActions from './actions'
+import * as BoardActions from './board-actions'
 
 export const initialState: boardState = {
     isLoading: false,
@@ -94,5 +94,5 @@ export const boardReducer = createReducer(
         ...state,
         isLoading: false,
         error,
-    }))
+    })),
 );
