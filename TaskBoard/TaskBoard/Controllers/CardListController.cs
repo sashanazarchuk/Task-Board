@@ -75,5 +75,19 @@ namespace TaskBoard.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+
+        [HttpGet("FetchListsByBoardId/{boardId}")]
+        public async Task<IActionResult> FetchCardListByBoardId(int boardId)
+        {
+            try
+            {
+                return Ok(await service.FetchListsByBoardId(boardId));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }

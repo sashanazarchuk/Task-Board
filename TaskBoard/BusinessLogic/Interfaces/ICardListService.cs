@@ -8,5 +8,6 @@ namespace BusinessLogic.Interfaces
         Task<T> EditList(int id, T t);
         Task DeleteList(int id);
         Task<IEnumerable<T>> FetchAllCardList();
+        Task<IEnumerable<T>> FetchListsByBoardId(int boardId);
     }
 }

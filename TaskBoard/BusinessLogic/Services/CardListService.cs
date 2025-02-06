@@ -137,6 +137,20 @@ namespace BusinessLogic.Services
             }
         }
 
+        public async Task<IEnumerable<CardListDto>> FetchListsByBoardId(int boardId)
+        {
+            try
+            {
+                var list = await context.CardLists.Where(c => c.BoardId == boardId).ToListAsync();
+                return mapper.Map<IEnumerable<CardListDto>>(list);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching lists by boardId: {ex.Message}");
+                throw;
+            }
+        }
+
         private List<string> HistoryListChange(CardList list, CardListDto listDto)
         {
             var changes = new List<string>();
